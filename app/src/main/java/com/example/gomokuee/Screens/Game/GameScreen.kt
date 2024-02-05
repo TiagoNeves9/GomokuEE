@@ -49,6 +49,7 @@ import com.example.gomokuee.Domain.loaded
 import com.example.gomokuee.R
 import com.example.gomokuee.Screens.Components.LoadingAlert
 import com.example.gomokuee.Screens.Components.ProcessError
+import com.example.gomokuee.Service.GomokuGames
 import com.example.gomokuee.Utils.BOARD_PLUS_SYMBOL_FULL_OFFSET
 import com.example.gomokuee.Utils.BOARD_PLUS_SYMBOL_HALF_OFFSET
 import com.example.gomokuee.Utils.BOARD_PLUS_SYMBOL_STROKE_WIDTH
@@ -297,7 +298,7 @@ fun StatusBar(content: @Composable () -> Unit = {}) {
     Text(stringResource(id = R.string.activity_main_footer), color = MaterialTheme.colorScheme.primary)
 }
 
-/*
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun GameScreenPreview() {
@@ -305,4 +306,4 @@ fun GameScreenPreview() {
         val game = GomokuGames.games.first()
         GameScreen(loaded(Result.success(game)), null, {}, "jp")
     }
-}*/
+}

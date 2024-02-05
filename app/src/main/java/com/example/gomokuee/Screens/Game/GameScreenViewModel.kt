@@ -10,10 +10,14 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.gomokuee.Domain.Board.Cell
 import com.example.gomokuee.Domain.Game
 import com.example.gomokuee.Domain.LoadState
+import com.example.gomokuee.Domain.UserInfo
 import com.example.gomokuee.Domain.idle
+import com.example.gomokuee.Domain.loaded
+import com.example.gomokuee.Domain.loading
 import com.example.gomokuee.Service.GomokuService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,11 +25,12 @@ import kotlinx.coroutines.launch
 
 class GameScreenViewModel(
     private val service : GomokuService,
-    private val gameInfo: Game
+    private val gameInfo: Game,
+    private val userInfo: UserInfo
 ) : ViewModel() {
     companion object {
-        fun factory(service: GomokuService, gameInfo: Game) = viewModelFactory {
-            initializer { GameScreenViewModel(service,gameInfo) }
+        fun factory(service: GomokuService, gameInfo: Game, userInfo: UserInfo) = viewModelFactory {
+            initializer { GameScreenViewModel(service,gameInfo, userInfo) }
         }
     }
 
@@ -47,5 +52,31 @@ class GameScreenViewModel(
 
     fun resetCurrentGameFlowFlowToIdle() {
         _currentGameFlow.value = idle()
+    }
+
+    fun fetchGame() {
+        _currentGameFlow.value = loading()
+        scope.launch {
+            while (true) {
+                val result: Result<Game> = runCatching {
+                    service.getGameById(userInfo.token, gameInfo.gameId)
+                }
+                _currentGameFlow.value = loaded(result)
+            }
+        }
+    }
+
+    fun play() {
+        check(_selectedCell != null)
+        //_currentGameFlow.value = loading()
+        viewModelScope.launch {
+            _selectedCell?.let { cell ->
+                val result: Result<Game> = runCatching {
+                    service.play(userInfo.token, gameInfo.gameId, cell, gameInfo.rules.boardDim)
+                }
+                _currentGameFlow.value = loaded(result)
+                _selectedCell = null
+            }
+        }
     }
 }

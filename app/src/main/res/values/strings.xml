@@ -29,4 +29,11 @@
 
     <string name="error_retry_button_text">Retry</string>
 
+    <string name="activity_main_description">
+        Have fun playing an abstract strategy board game, called Gomoku or Five in a Row
+    </string>
+
+    <string name="play_option">Play</string>
+    <string name="favourites_option">Favourites</string>
+
 </resources>

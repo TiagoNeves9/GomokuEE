@@ -14,30 +14,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class MainScreenViewModel(private val repository: UserInfoRepo): ViewModel() {
+class MainScreenViewModel(): ViewModel() {
 
     companion object{
-        fun factory(repository: UserInfoRepo) = viewModelFactory {
-            initializer { MainScreenViewModel(repository) }
+        fun factory() = viewModelFactory {
+            initializer { MainScreenViewModel() }
         }
     }
 
-    private val _userInfoFlow: MutableStateFlow<LoadState<UserInfo?>> = MutableStateFlow(idle())
-
-    val userInfoFlow: Flow<LoadState<UserInfo?>>
-        get() = _userInfoFlow.asStateFlow()
-
-    fun fetchUserInfo() {
-        if (_userInfoFlow.value is Idle) {
-            _userInfoFlow.value = loading()
-            viewModelScope.launch {
-                val result = runCatching { repository.getUserInfo() }
-                _userInfoFlow.value = loaded(result)
-            }
-        }
-    }
-
-    fun resetToIdle() {
-        _userInfoFlow.value = idle()
-    }
 }
