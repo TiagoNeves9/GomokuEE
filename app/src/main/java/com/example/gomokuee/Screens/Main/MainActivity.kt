@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
             GomokuEETheme {
                 MainScreen(
                     onStartEnable = true,
-                    onStartRequest = { HomeActivity.navigateTo(this, userInfo = UserInfo("1","Tiago","abc123")) }
+                    onStartRequest = { HomeActivity.navigateTo(this) }
                 )
             }
         }

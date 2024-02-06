@@ -26,11 +26,10 @@ import kotlinx.coroutines.launch
 class GameScreenViewModel(
     private val service : GomokuService,
     private val gameInfo: Game,
-    private val userInfo: UserInfo
 ) : ViewModel() {
     companion object {
-        fun factory(service: GomokuService, gameInfo: Game, userInfo: UserInfo) = viewModelFactory {
-            initializer { GameScreenViewModel(service,gameInfo, userInfo) }
+        fun factory(service: GomokuService, gameInfo: Game) = viewModelFactory {
+            initializer { GameScreenViewModel(service,gameInfo) }
         }
     }
 
@@ -54,7 +53,7 @@ class GameScreenViewModel(
         _currentGameFlow.value = idle()
     }
 
-    fun fetchGame() {
+    /*fun fetchGame() {
         _currentGameFlow.value = loading()
         scope.launch {
             while (true) {
@@ -64,7 +63,7 @@ class GameScreenViewModel(
                 _currentGameFlow.value = loaded(result)
             }
         }
-    }
+    }*/
 
     fun play() {
         check(_selectedCell != null)
@@ -72,7 +71,7 @@ class GameScreenViewModel(
         viewModelScope.launch {
             _selectedCell?.let { cell ->
                 val result: Result<Game> = runCatching {
-                    service.play(userInfo.token, gameInfo.gameId, cell, gameInfo.rules.boardDim)
+                    service.play(gameInfo.gameId, cell, gameInfo.rules.boardDim)
                 }
                 _currentGameFlow.value = loaded(result)
                 _selectedCell = null

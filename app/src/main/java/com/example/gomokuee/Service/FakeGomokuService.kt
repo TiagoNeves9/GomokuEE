@@ -17,15 +17,30 @@ class FakeGomokuService : GomokuService {
             it.gameId == gameId && (it.users.first == user || it.users.second == user)
         } ?: throw GameNotFound()
     }
-    override suspend fun play(token: String, gameId: String, cell: Cell, boardSize: Int): Game {
+    override suspend fun play(gameId: String, cell: Cell, boardSize: Int): Game {
         delay(FAKE_SERVICE_DELAY)
-        val user = GomokuUsers.getUserByToken(token) ?: throw InvalidLogin()
         val game = GomokuGames.games.firstOrNull {
-            it.gameId == gameId && (it.users.first == user || it.users.second == user)
+            it.gameId == gameId
         } ?: throw GameNotFound()
         return game.computeNewGame(cell)
     }
+
+    override suspend fun fetchFavourites(): List<FavInfo> {
+        return GomokuFavourites.favourites
+    }
 }
+
+object GomokuFavourites {
+    private val _favourites: MutableList<FavInfo> = mutableListOf(
+        FavInfo("Game1", "tbmaster", "05/02/2024"),
+        FavInfo("Game2","jp","05/02/2024"),
+        FavInfo("Game3","tiago","05/02/2024"),
+    )
+
+    val favourites : List<FavInfo>
+        get() = _favourites.toList()
+}
+
 
 object GomokuUsers {
     private val _users: MutableList<User> = mutableListOf(

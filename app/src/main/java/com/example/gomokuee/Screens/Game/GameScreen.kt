@@ -62,7 +62,7 @@ fun GameScreen(
     currentGame: LoadState<Game?>,
     selectedCell: Cell?,
     onCellSelected: (Cell) -> Unit = { },
-    currentUser: String,
+    currentUser: String? = null,
     onPlayRequested: () -> Unit = { },
     onDismissError: () -> Unit = { }
 ){

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">GomokuEE</string>
+
     <string name="activity_main_footer">Epoca Especial - PDM 2023/24</string>
     <string name="loading_game_title">Loading Game</string>
     <string name="loading_game_message">Building your own personal game, please wait</string>
@@ -11,22 +12,16 @@
 
     <string name="error_username_title">Error invalid username</string>
     <string name="username_is_blank_input_error">Username cannot be empty</string>
-
     <string name="error_password_title">Error invalid password</string>
     <string name="password_is_blank_input_error">Password cannot be empty</string>
-
     <string name="error_confirm_password_title">Error invalid confirm password</string>
     <string name="repeat_password_is_blank_input_error">Confirm password cannot be empty</string>
     <string name="repeat_password_and_password_not_equal_input_error">Confirm password must be equal to password</string>
-
     <string name="error_api_title">Error accessing the server</string>
     <string name="error_could_not_reach_api">Please check if the device is connected to the internet</string>
-
     <string name="error_general_title">Error</string>
     <string name="error_bad_login">Error invalid login</string>
-
     <string name="error_bad_signup">Error user already exists</string>
-
     <string name="error_retry_button_text">Retry</string>
 
     <string name="activity_main_description">
@@ -35,5 +30,11 @@
 
     <string name="play_option">Play</string>
     <string name="favourites_option">Favourites</string>
+
+
+    <string name="top_bar_navigate_to_about">About</string>
+    <string name="top_bar_go_back">Back</string>
+    <string name="activity_favourites_title">Favourites</string>
+    <string name="activity_home_title">Home</string>
 
 </resources>

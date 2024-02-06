@@ -7,7 +7,7 @@ data class FavInfo(val title: String, val opponent: String, val date : String){
 }
 
 fun validateFavInfo(title: String, opponent: String, date:String): Boolean {
-    return title.isBlank() && opponent.isBlank() && date.isBlank()
+    return title.isNotBlank() && opponent.isNotBlank() && date.isNotBlank()
 }
 
 fun toFavInfoOrNull(title: String,opponent: String,date: String): FavInfo? =

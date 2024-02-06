@@ -25,7 +25,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.gomokuee.Domain.UserInfo
 import com.example.gomokuee.R
+import com.example.gomokuee.Screens.Components.CustomBar
 import com.example.gomokuee.Screens.Components.CustomContainerView
+import com.example.gomokuee.Screens.Components.NavigationHandlers
 import com.example.gomokuee.Utils.HOME_FONT_SIZE
 import com.example.gomokuee.ui.theme.GomokuEETheme
 
@@ -37,18 +39,21 @@ private data class MenuOption(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    userInfo: UserInfo,
+    userInfo: UserInfo? = null,
     error: Exception? = null,
     onPlayRequest: () -> Unit = { },
     onFavoritesRequest: () -> Unit = { },
-    onDismissError: () -> Unit = { }
+    onDismissError: () -> Unit = { },
+    navigation: NavigationHandlers = NavigationHandlers()
 ){
     val menu: List<MenuOption> = listOf(
         MenuOption(onPlayRequest, Icons.Default.PlayArrow, stringResource(id = R.string.play_option)),
         MenuOption(onFavoritesRequest, Icons.Default.Favorite, stringResource(id = R.string.favourites_option))
     )
 
-    Scaffold {
+    Scaffold(
+        topBar = { CustomBar(text = stringResource(id = R.string.activity_home_title), navigation = navigation) }
+    ) {
             padding ->
         CustomContainerView(
             modifier = Modifier

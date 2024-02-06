@@ -28,7 +28,7 @@ import com.example.gomokuee.Screens.Components.*
 import com.example.gomokuee.Utils.*
 import com.example.gomokuee.ui.theme.GomokuEETheme
 
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     onStartEnable: Boolean = true,
