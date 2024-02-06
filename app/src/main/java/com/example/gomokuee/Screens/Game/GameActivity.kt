@@ -28,6 +28,7 @@ import com.example.gomokuee.Screens.Common.UserInfoExtra
 import com.example.gomokuee.Screens.Common.getGameExtra
 import com.example.gomokuee.Screens.Common.getUserInfoExtra
 import com.example.gomokuee.Screens.Common.toUserInfo
+import com.example.gomokuee.Screens.Components.NavigationHandlers
 import com.example.gomokuee.Screens.Home.HomeActivity
 import com.example.gomokuee.ui.theme.GomokuEETheme
 import kotlinx.coroutines.flow.collect
@@ -61,7 +62,7 @@ class GameActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        /*lifecycleScope.launch {
+        lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
 
                 viewModel.currentGameFlow.collect{
@@ -71,8 +72,6 @@ class GameActivity : ComponentActivity() {
                 }
             }
         }
-       */
-
         setContent {
             val currentGame by viewModel.currentGameFlow.collectAsState(initial = loaded(Result.success(gameExtra)))
             GomokuEETheme {
@@ -82,7 +81,11 @@ class GameActivity : ComponentActivity() {
                     /*currentUser = userInfoExtra.username,*/
                     onPlayRequested = viewModel::play,
                     onCellSelected = viewModel::changeSelectedCell,
-                    onDismissError = viewModel::resetCurrentGameFlowFlowToIdle
+                    onDismissError = viewModel::resetCurrentGameFlowFlowToIdle,
+                    navigation = NavigationHandlers(
+                        onBackRequested = { finish() },
+                        onFavouriteRequested = { }
+                    )
                 )
             }
         }

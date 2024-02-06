@@ -36,5 +36,6 @@
     <string name="top_bar_go_back">Back</string>
     <string name="activity_favourites_title">Favourites</string>
     <string name="activity_home_title">Home</string>
+    <string name="activity_game_title">Game</string>
 
 </resources>

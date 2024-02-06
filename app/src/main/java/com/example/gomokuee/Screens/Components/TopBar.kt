@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,6 +26,7 @@ import com.example.gomokuee.R
 
 data class NavigationHandlers(
     val onBackRequested: (() -> Unit)? = null,
+    val onFavouriteRequested: (() -> Unit)? = null
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,6 +57,18 @@ fun TopBar(
                         contentDescription = stringResource(R.string.top_bar_go_back)
                     )
                 }
+        },
+        actions = {
+            if (navigation.onFavouriteRequested != null){
+                IconButton(
+                    onClick = navigation.onFavouriteRequested,
+                    modifier = Modifier
+                ) {
+                    Icon(imageVector = Icons.Default.Favorite,
+                        contentDescription = stringResource(id = R.string.favourites_option)
+                    )
+                }
+            }
         }
     )
 

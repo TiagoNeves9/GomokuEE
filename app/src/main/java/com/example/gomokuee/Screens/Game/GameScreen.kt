@@ -13,8 +13,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,7 +49,10 @@ import com.example.gomokuee.Domain.exceptionOrNull
 import com.example.gomokuee.Domain.getOrNull
 import com.example.gomokuee.Domain.loaded
 import com.example.gomokuee.R
+import com.example.gomokuee.Screens.Components.CustomBar
+import com.example.gomokuee.Screens.Components.CustomContainerView
 import com.example.gomokuee.Screens.Components.LoadingAlert
+import com.example.gomokuee.Screens.Components.NavigationHandlers
 import com.example.gomokuee.Screens.Components.ProcessError
 import com.example.gomokuee.Service.GomokuGames
 import com.example.gomokuee.Utils.BOARD_PLUS_SYMBOL_FULL_OFFSET
@@ -56,7 +61,7 @@ import com.example.gomokuee.Utils.BOARD_PLUS_SYMBOL_STROKE_WIDTH
 import com.example.gomokuee.Utils.BOARD_PLUS_SYMBOL_ZERO_OFFSET
 import com.example.gomokuee.ui.theme.GomokuEETheme
 
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GameScreen(
     currentGame: LoadState<Game?>,
@@ -64,19 +69,24 @@ fun GameScreen(
     onCellSelected: (Cell) -> Unit = { },
     currentUser: String? = null,
     onPlayRequested: () -> Unit = { },
-    onDismissError: () -> Unit = { }
+    onDismissError: () -> Unit = { },
+    navigation: NavigationHandlers = NavigationHandlers()
 ){
 
     val containerModifier = Modifier
         .background(Color.DarkGray)
         .fillMaxSize()
 
-    Surface(color = MaterialTheme.colorScheme.background) {
-        Column(
-            containerModifier,
-            Arrangement.Bottom,
-            Alignment.CenterHorizontally
-        ) {
+    Scaffold(
+        topBar = { CustomBar(text = stringResource(id = R.string.activity_game_title), navigation = navigation) }
+    ) {
+        padding ->
+        CustomContainerView(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+
+        ){
             currentGame.getOrNull()?.let { game ->
 
                 Text(text = "${game.users.first.username} VS ${game.users.second.username}")
@@ -190,7 +200,7 @@ fun NumberAxisView(boardSize: Int) =
 @Composable
 fun AxisText(text: String) = Text(
     text = text,
-    color = MaterialTheme.colorScheme.primary,
+    color = Color.Black,
     fontWeight = FontWeight.Bold,
     textAlign = TextAlign.Center
 )
@@ -295,7 +305,7 @@ fun StatusBar(content: @Composable () -> Unit = {}) {
     ) {
         content()
     }
-    Text(stringResource(id = R.string.activity_main_footer), color = MaterialTheme.colorScheme.primary)
+    Text(stringResource(id = R.string.activity_main_footer), color = Color.Black)
 }
 
 
