@@ -4,25 +4,29 @@ package com.example.gomokuee.Service
 import com.example.gomokuee.Domain.Board.*
 import com.example.gomokuee.Domain.*
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import java.time.Instant
 
 private const val FAKE_SERVICE_DELAY = 1000L
 private const val FAKE_USER_TOKEN_LENGTH = 10
 class FakeGomokuService : GomokuService {
 
-    override suspend fun getGameById(token: String, gameId: String): Game {
+    override suspend fun getGameById(gameId: String): Flow<Game> = flow {
         delay(FAKE_SERVICE_DELAY)
-        val user = GomokuUsers.getUserByToken(token) ?: throw InvalidLogin()
-        return GomokuGames.games.firstOrNull {
-            it.gameId == gameId && (it.users.first == user || it.users.second == user)
+        val game =  GomokuGames.games.firstOrNull {
+            it.gameId == gameId
         } ?: throw GameNotFound()
+        emit(game)
     }
-    override suspend fun play(gameId: String, cell: Cell, boardSize: Int): Game {
+    override suspend fun play(gameId: String, cell: Cell, boardSize: Int): Flow<Game> = flow {
         delay(FAKE_SERVICE_DELAY)
         val game = GomokuGames.games.firstOrNull {
             it.gameId == gameId
         } ?: throw GameNotFound()
-        return game.computeNewGame(cell)
+        val newGame = game.computeNewGame(cell)
+        GomokuGames.updateGame(newGame,game)
+        emit(newGame)
     }
 
     override suspend fun fetchFavourites(): List<FavInfo> {
@@ -105,6 +109,11 @@ object GomokuGames {
             rules = Rules(BOARD_DIM, Opening.FREESTYLE, Variant.FREESTYLE)
         )
     )
+
+    fun updateGame(gameNew: Game, gameOld: Game){
+        _games.remove(gameOld)
+        _games.add(gameNew)
+    }
 
     val games: List<Game>
         get() = _games.toList()

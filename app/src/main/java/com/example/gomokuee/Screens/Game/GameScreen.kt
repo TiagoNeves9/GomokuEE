@@ -72,11 +72,6 @@ fun GameScreen(
     onDismissError: () -> Unit = { },
     navigation: NavigationHandlers = NavigationHandlers()
 ){
-
-    val containerModifier = Modifier
-        .background(Color.DarkGray)
-        .fillMaxSize()
-
     Scaffold(
         topBar = { CustomBar(text = stringResource(id = R.string.activity_game_title), navigation = navigation) }
     ) {
@@ -92,9 +87,9 @@ fun GameScreen(
                 Text(text = "${game.users.first.username} VS ${game.users.second.username}")
 
                 DrawBoard(game.board, selectedCell) { cell ->
-                    if (game.currentPlayer.first.username == currentUser) {
+                   // if (game.currentPlayer.first.username == currentUser) {
                         onCellSelected(cell)
-                    }
+                    //}
                 }
 
                 if (selectedCell != null) {

@@ -20,6 +20,7 @@ import com.example.gomokuee.Domain.UserInfo
 import com.example.gomokuee.Domain.getOrNull
 import com.example.gomokuee.Domain.idle
 import com.example.gomokuee.Domain.loaded
+import com.example.gomokuee.Domain.success
 import com.example.gomokuee.GomokuDependenciesContainer
 import com.example.gomokuee.Screens.Common.GAME_EXTRA
 import com.example.gomokuee.Screens.Common.GameExtra
@@ -62,23 +63,19 @@ class GameActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED){
+        /*lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
 
-                viewModel.currentGameFlow.collect{
-                    if (it is Loaded){
-                        doNavigation(it.getOrNull())
-                    }
-                }
             }
-        }
+        }*/
+
+        //viewModel.fetchGame()
         setContent {
-            val currentGame by viewModel.currentGameFlow.collectAsState(initial = loaded(Result.success(gameExtra)))
+            val currentGame by viewModel.currentGameFlow.collectAsState(initial = idle())
             GomokuEETheme {
                 GameScreen(
-                    currentGame = loaded(Result.success(gameExtra)),
+                    currentGame = currentGame,
                     selectedCell = viewModel.selectedCell,
-                    /*currentUser = userInfoExtra.username,*/
                     onPlayRequested = viewModel::play,
                     onCellSelected = viewModel::changeSelectedCell,
                     onDismissError = viewModel::resetCurrentGameFlowFlowToIdle,

@@ -9,8 +9,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface GomokuService {
 
-    suspend fun getGameById(token: String, gameId: String): Game
-    suspend fun play(gameId: String, cell: Cell, boardSize: Int): Game
+    suspend fun getGameById(gameId: String): Flow<Game>
+    suspend fun play(gameId: String, cell: Cell, boardSize: Int): Flow<Game>
+
 
     suspend fun fetchFavourites() : List<FavInfo>
 }
