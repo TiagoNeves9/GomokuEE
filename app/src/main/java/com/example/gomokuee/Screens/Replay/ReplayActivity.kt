@@ -23,6 +23,7 @@ import com.example.gomokuee.Screens.Common.FAVOURITE_EXTRA
 import com.example.gomokuee.Screens.Common.FavExtra
 import com.example.gomokuee.Screens.Common.getFavInfoExtra
 import com.example.gomokuee.Screens.Common.toFavInfo
+import com.example.gomokuee.Screens.Components.NavigationHandlers
 import com.example.gomokuee.ui.theme.GomokuEETheme
 import kotlinx.coroutines.launch
 
@@ -76,7 +77,8 @@ class ReplayActivity : ComponentActivity() {
                 ReplayScreen(
                     plays = plays,
                     index = viewModel.index,
-                    replayHandlers = ReplayHandlers( viewModel::next, viewModel::prev)
+                    replayHandlers = ReplayHandlers( viewModel::next, viewModel::prev),
+                    navigation = NavigationHandlers(onBackRequested = { finish() })
                 )
             }
         }

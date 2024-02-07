@@ -17,6 +17,7 @@ import com.example.gomokuee.Screens.Common.UserInfoExtra
 import com.example.gomokuee.Screens.Common.getUserInfoExtra
 import com.example.gomokuee.Screens.Common.toUserInfo
 import com.example.gomokuee.Screens.Components.NavigationHandlers
+import com.example.gomokuee.Screens.Replay.ReplayActivity
 import kotlinx.coroutines.launch
 
 class FavouritesActivity : ComponentActivity() {
@@ -53,7 +54,7 @@ class FavouritesActivity : ComponentActivity() {
             val currentFavourites by viewModel.favourites.collectAsState(initial = idle())
             FavouritesScreen(
                 favourites = currentFavourites,
-                onFavouriteSelected = { },
+                onFavouriteSelected = { ReplayActivity.navigateTo(this) },
                 navigation = NavigationHandlers(
                     onBackRequested = {finish()}
                 )

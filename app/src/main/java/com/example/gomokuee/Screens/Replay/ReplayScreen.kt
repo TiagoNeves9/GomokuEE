@@ -60,7 +60,7 @@ fun ReplayScreen(
     replayHandlers: ReplayHandlers = ReplayHandlers()
 ){
     Scaffold(
-        topBar = { CustomBar(text = "TEST", navigation = navigation) }
+        topBar = { CustomBar(text = "Replay of TEST", navigation = navigation) }
     ) { padding ->
         CustomContainerView(
             modifier = Modifier
