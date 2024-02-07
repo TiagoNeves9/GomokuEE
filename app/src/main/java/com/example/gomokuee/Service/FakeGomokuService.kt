@@ -119,15 +119,15 @@ object GomokuGames {
         get() = _games.toList()
 
     fun createGame(
-        users: Pair<User, User>,
-        board: Board,
-        currentPlayer: Player,
-        score: Int,
-        now: Instant,
-        rules: Rules
+        users: Pair<User, User> = Pair(User("1","PlayerB","admin"), User("2","PlayerW","admin")),
+        board: Board = createBoard(boardSize = BOARD_DIM),
+        currentPlayer: Player = Player(User("1","PlayerB","admin"), Turn.BLACK_PIECE),
+        rules: Rules = Rules(BOARD_DIM, Opening.FREESTYLE, Variant.FREESTYLE)
     ): Game {
         val gameId = generateRandomString()
-        return Game(gameId, users, board, currentPlayer, rules)
+        val game = Game(gameId, users, board, currentPlayer, rules)
+        _games.add(game)
+        return game
     }
 }
 

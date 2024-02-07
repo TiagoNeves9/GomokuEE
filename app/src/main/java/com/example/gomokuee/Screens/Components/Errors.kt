@@ -16,8 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.gomokuee.R
 import com.example.gomokuee.Service.ApiUnauthorizedException
-import com.example.gomokuee.Service.InvalidLogin
-import com.example.gomokuee.Service.UserAlreadyExists
+
 
 abstract class InputException : Exception()
 
@@ -36,9 +35,7 @@ fun ProcessError(dismissError: () -> Unit, cause: Throwable) {
         is EmptyPassword -> Pair(R.string.error_password_title, R.string.password_is_blank_input_error)
         is EmptyConfirmPassword -> Pair(R.string.error_confirm_password_title, R.string.repeat_password_is_blank_input_error)
         is UnmatchedPasswords -> Pair(R.string.error_confirm_password_title, R.string.repeat_password_and_password_not_equal_input_error)
-        is InvalidLogin -> Pair(R.string.error_general_title, R.string.error_bad_login)
         is ApiUnauthorizedException -> Pair(R.string.error_general_title, R.string.error_bad_login)
-        is UserAlreadyExists -> Pair(R.string.error_general_title, R.string.error_bad_signup)
         else -> Pair(R.string.error_api_title, R.string.error_could_not_reach_api)
     }
 

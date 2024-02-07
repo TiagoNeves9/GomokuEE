@@ -24,11 +24,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.gomokuee.Domain.Board.BOARD_DIM
+import com.example.gomokuee.Domain.Board.Board
+import com.example.gomokuee.Domain.Board.BoardRun
+import com.example.gomokuee.Domain.Board.Cell
+import com.example.gomokuee.Domain.Board.createBoard
 import com.example.gomokuee.Domain.FavInfo
+import com.example.gomokuee.Domain.Turn
 import com.example.gomokuee.R
 import com.example.gomokuee.Screens.Components.CustomBar
 import com.example.gomokuee.Screens.Components.CustomContainerView
 import com.example.gomokuee.Screens.Components.NavigationHandlers
+import com.example.gomokuee.Screens.Game.DrawBoard
+import com.example.gomokuee.Screens.Game.DrawTurnOrWinnerPiece
 import com.example.gomokuee.Utils.BUTTON_DEFAULT_PADDING
 import com.example.gomokuee.Utils.DEFAULT_CONTENT_PADDING
 import com.example.gomokuee.Utils.DEFAULT_RADIUS
@@ -46,13 +54,13 @@ data class ReplayHandlers(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReplayScreen(
-    favoriteGame : FavInfo,
+    plays : List<BoardRun>,
     navigation: NavigationHandlers = NavigationHandlers(),
     index: Int = 0,
     replayHandlers: ReplayHandlers = ReplayHandlers()
 ){
     Scaffold(
-        topBar = { CustomBar(text = favoriteGame.title, navigation = navigation) }
+        topBar = { CustomBar(text = "TEST", navigation = navigation) }
     ) { padding ->
         CustomContainerView(
             modifier = Modifier
@@ -60,11 +68,13 @@ fun ReplayScreen(
                 .padding(padding)
 
         ){
-            Text(text = "Game versus ${favoriteGame.opponent}")
-            
+            Text(text = "Game versus TEST")
+
+            DrawBoard(board = BoardRun(plays[index].positions, plays[index].turn, BOARD_DIM), selectedCell = null)
+
             NavigationButtons(replayHandlers)
 
-            Text(text = "Game played at ${favoriteGame.date}")
+            Text(text = "Game played at TEST")
         }
 
     }
@@ -117,7 +127,17 @@ private fun ReplayNavigationButton(
 fun ReplayPreview(){
     val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")
     val current = LocalDateTime.now().format(formatter).toString()
+    val cell1: Cell = Cell.invoke(11, 4, BOARD_DIM)
+    val cell2: Cell = Cell.invoke(10, 6, BOARD_DIM)
+    val plays : List<BoardRun> = listOf(
+        BoardRun(mapOf(Pair(cell1,Turn.BLACK_PIECE)),Turn.BLACK_PIECE, BOARD_DIM),
+        BoardRun(mapOf(Pair(cell2,Turn.WHITE_PIECE)),Turn.WHITE_PIECE, BOARD_DIM),
+        )
     GomokuEETheme {
-        ReplayScreen(favoriteGame = FavInfo("Game3", "JP", current))
+        ReplayScreen(
+            plays,
+            index = 0,
+            replayHandlers = ReplayHandlers( onNext = { }, onPrev = { })
+        )
     }
 }
