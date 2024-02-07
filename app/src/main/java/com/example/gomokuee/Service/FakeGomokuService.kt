@@ -25,6 +25,7 @@ class FakeGomokuService : GomokuService {
             it.gameId == gameId
         } ?: throw GameNotFound()
         val newGame = game.computeNewGame(cell)
+        GomokuFavourites.updatePlays(newGame)
         GomokuGames.updateGame(newGame,game)
         emit(newGame)
     }
@@ -40,6 +41,12 @@ object GomokuFavourites {
         FavInfo("Game2","jp","05/02/2024"),
         FavInfo("Game3","tiago","05/02/2024"),
     )
+    var favouritesPlays : List<Board> = emptyList()
+    fun updatePlays(game: Game): List<Board>{
+        val boardToAdd = BoardRun(game.board.positions,game.currentPlayer.second, BOARD_DIM)
+        favouritesPlays = favouritesPlays + boardToAdd
+        return favouritesPlays
+    }
 
     val favourites : List<FavInfo>
         get() = _favourites.toList()

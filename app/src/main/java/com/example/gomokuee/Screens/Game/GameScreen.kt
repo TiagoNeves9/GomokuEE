@@ -67,7 +67,6 @@ fun GameScreen(
     currentGame: LoadState<Game?>,
     selectedCell: Cell?,
     onCellSelected: (Cell) -> Unit = { },
-    currentUser: String? = null,
     onPlayRequested: () -> Unit = { },
     onDismissError: () -> Unit = { },
     navigation: NavigationHandlers = NavigationHandlers()
@@ -87,9 +86,7 @@ fun GameScreen(
                 Text(text = "${game.users.first.username} VS ${game.users.second.username}")
 
                 DrawBoard(game.board, selectedCell) { cell ->
-                   // if (game.currentPlayer.first.username == currentUser) {
-                        onCellSelected(cell)
-                    //}
+                   onCellSelected(cell)
                 }
 
                 if (selectedCell != null) {
@@ -309,6 +306,6 @@ fun StatusBar(content: @Composable () -> Unit = {}) {
 fun GameScreenPreview() {
     GomokuEETheme {
         val game = GomokuGames.games.first()
-        GameScreen(loaded(Result.success(game)), null, {}, "jp")
+        GameScreen(loaded(Result.success(game)), null, {})
     }
 }

@@ -79,8 +79,6 @@ class GameScreenViewModel(
                 try {
                     service.play(gameInfo.gameId,cell,gameInfo.rules.boardDim).collect{ game ->
                         _currentGameFlow.value = loaded(Result.success(game))
-                        Log.v("Board1", game.board.positions.toString())
-                        Log.v("Board1", game.board.toString())
                     }
 
 
