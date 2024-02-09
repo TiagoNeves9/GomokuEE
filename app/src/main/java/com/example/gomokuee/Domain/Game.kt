@@ -6,9 +6,13 @@ import com.example.gomokuee.Domain.Board.BoardWin
 import com.example.gomokuee.Domain.Board.Cell
 
 
+
 data class Game(
-    val gameId: String, val users: Pair<User, User>, val board: Board,
-    val currentPlayer: Player, val rules: Rules
+    val gameId: String,
+    val users: Pair<User, User>,
+    val board: Board,
+    val currentPlayer: Player,
+    val rules: Rules,
 ) {
     private fun switchTurn() =
         if (currentPlayer.first == users.first) users.second

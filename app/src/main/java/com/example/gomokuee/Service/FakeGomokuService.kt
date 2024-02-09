@@ -8,19 +8,16 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.time.Instant
 
-private const val FAKE_SERVICE_DELAY = 1000L
 private const val FAKE_USER_TOKEN_LENGTH = 10
 class FakeGomokuService : GomokuService {
 
     override suspend fun getGameById(gameId: String): Flow<Game> = flow {
-        delay(FAKE_SERVICE_DELAY)
         val game =  GomokuGames.games.firstOrNull {
             it.gameId == gameId
         } ?: throw GameNotFound()
         emit(game)
     }
     override suspend fun play(gameId: String, cell: Cell, boardSize: Int): Flow<Game> = flow {
-        delay(FAKE_SERVICE_DELAY)
         val game = GomokuGames.games.firstOrNull {
             it.gameId == gameId
         } ?: throw GameNotFound()
@@ -36,10 +33,20 @@ class FakeGomokuService : GomokuService {
 }
 
 object GomokuFavourites {
+
+    val cell1: Cell = Cell.invoke(11, 4, BOARD_DIM)
+    val cell2: Cell = Cell.invoke(10, 6, BOARD_DIM)
+    val map: Map<Cell,Turn> = mapOf(Pair(cell1,Turn.BLACK_PIECE))
+    val plays : List<BoardRun> = listOf(
+        BoardRun(emptyMap(),Turn.BLACK_PIECE, BOARD_DIM),
+        BoardRun(map,Turn.BLACK_PIECE, BOARD_DIM),
+        BoardRun(map + mapOf(Pair(cell2,Turn.WHITE_PIECE)),Turn.WHITE_PIECE, BOARD_DIM),
+    )
+
     private val _favourites: MutableList<FavInfo> = mutableListOf(
-        FavInfo("Game1", "tbmaster", "05/02/2024"),
-        FavInfo("Game2","jp","05/02/2024"),
-        FavInfo("Game3","tiago","05/02/2024"),
+        FavInfo("Game1", "tbmaster", "05/02/2024", /*plays*/),
+        FavInfo("Game2","jp","05/02/2024", /*plays*/),
+        FavInfo("Game3","tiago","05/02/2024", /*plays*/),
     )
     var favouritesPlays : List<Board> = emptyList()
     fun updatePlays(game: Game): List<Board>{

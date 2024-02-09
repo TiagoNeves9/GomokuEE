@@ -58,18 +58,6 @@ fun TopBar(
                     )
                 }
         },
-        actions = {
-            if (navigation.onFavouriteRequested != null){
-                IconButton(
-                    onClick = navigation.onFavouriteRequested,
-                    modifier = Modifier
-                ) {
-                    Icon(imageVector = Icons.Default.Favorite,
-                        contentDescription = stringResource(id = R.string.favourites_option)
-                    )
-                }
-            }
-        }
     )
 
 @Composable

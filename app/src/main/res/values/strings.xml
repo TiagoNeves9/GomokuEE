@@ -39,5 +39,6 @@
     <string name="activity_game_title">Game</string>
     <string name="prev">Previous</string>
     <string name="next">Next</string>
+    <string name="addFavorite">Add to favourites</string>
 
 </resources>

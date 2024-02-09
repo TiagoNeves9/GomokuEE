@@ -17,6 +17,7 @@ import com.example.gomokuee.Domain.Board.Cell
 import com.example.gomokuee.Domain.Board.Row
 import com.example.gomokuee.Domain.FavInfo
 import com.example.gomokuee.Domain.Turn
+import com.example.gomokuee.Domain.getOrNull
 import com.example.gomokuee.Domain.idle
 import com.example.gomokuee.GomokuDependenciesContainer
 import com.example.gomokuee.Screens.Common.FAVOURITE_EXTRA
@@ -30,13 +31,13 @@ import kotlinx.coroutines.launch
 class ReplayActivity : ComponentActivity() {
 
     companion object{
-        fun navigateTo(origin: Context){
-            origin.startActivity(createIntent(origin))
+        fun navigateTo(origin: Context, favInfo: FavInfo){
+            origin.startActivity(createIntent(origin, favInfo))
         }
 
-        private fun createIntent(ctx: Context): Intent {
+        private fun createIntent(ctx: Context, favInfo: FavInfo): Intent {
             val intent = Intent(ctx, ReplayActivity::class.java)
-            //intent.putExtra(FAVOURITE_EXTRA, FavExtra(favInfo))
+            intent.putExtra(FAVOURITE_EXTRA, FavExtra(favInfo))
             return intent
         }
     }
