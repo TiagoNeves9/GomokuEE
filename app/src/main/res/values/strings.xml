@@ -10,10 +10,10 @@
     <string name="make_move_button">Make Move!</string>
     <string name="default_ack_button">Got it</string>
 
-    <string name="error_username_title">Error invalid username</string>
-    <string name="username_is_blank_input_error">Username cannot be empty</string>
-    <string name="error_password_title">Error invalid password</string>
-    <string name="password_is_blank_input_error">Password cannot be empty</string>
+    <string name="error_invalid_title">Error invalid title</string>
+    <string name="title_is_blank_input_error">Title cannot be empty</string>
+    <string name="error_invalid_opponent">Error invalid opponent</string>
+    <string name="opponent_is_blank_input_error">Opponent cannot be empty</string>
     <string name="error_confirm_password_title">Error invalid confirm password</string>
     <string name="repeat_password_is_blank_input_error">Confirm password cannot be empty</string>
     <string name="repeat_password_and_password_not_equal_input_error">Confirm password must be equal to password</string>
@@ -40,5 +40,10 @@
     <string name="prev">Previous</string>
     <string name="next">Next</string>
     <string name="addFavorite">Add to favourites</string>
+    <string name="new_favourite_screen_title">Save Game?</string>
+    <string name="new_favourite_game_title">Game Title</string>
+    <string name="new_favourite_game_opponent">Your opponent</string>
+    <string name="new_favourite_save">Save favourite</string>
+    <string name="new_favourite_dismiss">Dismiss new favourite</string>
 
 </resources>

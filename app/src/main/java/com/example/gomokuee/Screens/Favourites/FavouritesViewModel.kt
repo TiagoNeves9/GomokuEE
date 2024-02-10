@@ -1,5 +1,6 @@
 package com.example.gomokuee.Screens.Favourites
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
@@ -38,6 +39,7 @@ class FavouritesViewModel( private val service: GomokuService) : ViewModel() {
         viewModelScope.launch {
             val result = runCatching { service.fetchFavourites() }
             _favouritesFlow.value = loaded(result)
+            Log.v("FFFavs", service.fetchFavourites().toString())
         }
     }
 }

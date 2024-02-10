@@ -3,12 +3,14 @@ package com.example.gomokuee.Screens.Favourites
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import com.example.gomokuee.Domain.FavInfo
 import com.example.gomokuee.Domain.UserInfo
 import com.example.gomokuee.Domain.idle
@@ -28,13 +30,12 @@ import kotlinx.coroutines.launch
 class FavouritesActivity : ComponentActivity() {
     companion object{
 
-        fun createIntent(ctx: Context, favInfo: FavInfo): Intent{
+        fun createIntent(ctx: Context): Intent{
             val intent = Intent(ctx, FavouritesActivity::class.java)
-            intent.putExtra(FAVOURITE_EXTRA,FavExtra(favInfo))
             return intent
         }
-        fun navigateTo(ctx: Context, favInfo: FavInfo){
-            ctx.startActivity(createIntent(ctx,favInfo))
+        fun navigateTo(ctx: Context){
+            ctx.startActivity(createIntent(ctx))
         }
     }
 
@@ -42,9 +43,6 @@ class FavouritesActivity : ComponentActivity() {
         application as GomokuDependenciesContainer
     }
 
-    private val favInfoExtra: FavInfo by lazy {
-        checkNotNull(getFavInfoExtra(intent)).toFavInfo()
-    }
 
     private val viewModel by viewModels<FavouritesViewModel>{
         FavouritesViewModel.factory(dependecies.gomokuService)
@@ -61,7 +59,7 @@ class FavouritesActivity : ComponentActivity() {
             val currentFavourites by viewModel.favourites.collectAsState(initial = idle())
             FavouritesScreen(
                 favourites = currentFavourites,
-                onFavouriteSelected = { ReplayActivity.navigateTo(this, favInfoExtra) },
+                onFavouriteSelected = {favinfo -> ReplayActivity.navigateTo(this, FavExtra(favinfo)) },
                 navigation = NavigationHandlers(
                     onBackRequested = {finish()}
                 )

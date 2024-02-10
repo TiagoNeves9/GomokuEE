@@ -20,6 +20,7 @@ import com.example.gomokuee.Screens.Common.GameExtra
 import com.example.gomokuee.Screens.Common.getGameExtra
 import com.example.gomokuee.Screens.Components.NavigationHandlers
 import com.example.gomokuee.Screens.Home.HomeActivity
+import com.example.gomokuee.Screens.NewFavourite.NewFavouriteActivity
 import com.example.gomokuee.ui.theme.GomokuEETheme
 
 
@@ -67,7 +68,7 @@ class GameActivity : ComponentActivity() {
                     onPlayRequested = viewModel::play,
                     onCellSelected = viewModel::changeSelectedCell,
                     onDismissError = viewModel::resetCurrentGameFlowFlowToIdle,
-                    onFavouriteRequest =  { },
+                    onFavouriteRequest =  { NewFavouriteActivity.navigateTo(this) },
                     navigation = NavigationHandlers(
                         onBackRequested = { finish() }
                     ),

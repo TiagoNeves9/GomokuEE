@@ -12,7 +12,9 @@ interface GomokuService {
     suspend fun getGameById(gameId: String): Flow<Game>
     suspend fun play(gameId: String, cell: Cell, boardSize: Int): Flow<Game>
 
+    suspend fun updateFavInfo(title: String, opponent: String): FavInfo
 
+    suspend fun dismissPlays()
     suspend fun fetchFavourites() : List<FavInfo>
 }
 
@@ -26,10 +28,4 @@ abstract class FetchGomokuException(message: String, cause: Throwable? = null)
 
 class GameNotFound : FetchGomokuException("Game not found")
 
-class FetchGomokuError(message: String, cause: Throwable?) : FetchGomokuException(message, cause)
-
 class ApiUnauthorizedException : FetchGomokuException("Unauthorized Access")
-
-class ApiErrorException(
-    val problemJson: ProblemJson
-) : FetchGomokuException(message = problemJson.detail ?: "Something went wrong")

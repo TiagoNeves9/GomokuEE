@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "796477821807",
+    "project_id": "gomokuroyaleee",
+    "storage_bucket": "gomokuroyaleee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:796477821807:android:cc24af551ffe9b4db3ce9a",
+        "android_client_info": {
+          "package_name": "com.example.gomokuee"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4EdZQGzIR8uRaYhYKOC4Uq07n_GZi6Co"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

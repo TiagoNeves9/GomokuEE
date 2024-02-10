@@ -74,7 +74,7 @@ class HomeActivity: ComponentActivity() {
                 HomeScreen(
                     //userInfo = userInfoExtra,
                     error = viewModel.error,
-                    onFavoritesRequest = { FavouritesActivity.navigateTo(this, favInfoExtra)},
+                    onFavoritesRequest = { FavouritesActivity.navigateTo(this)},
                     onPlayRequest = { GameActivity.navigateTo(this,GameExtra(GomokuGames.createGame()))},
                     onDismissError = viewModel::onDismissError,
                     navigation = NavigationHandlers(

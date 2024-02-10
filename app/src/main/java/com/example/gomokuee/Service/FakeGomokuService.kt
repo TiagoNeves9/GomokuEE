@@ -3,10 +3,9 @@ package com.example.gomokuee.Service
 
 import com.example.gomokuee.Domain.Board.*
 import com.example.gomokuee.Domain.*
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import java.time.Instant
+import java.util.Calendar
 
 private const val FAKE_USER_TOKEN_LENGTH = 10
 class FakeGomokuService : GomokuService {
@@ -27,6 +26,13 @@ class FakeGomokuService : GomokuService {
         emit(newGame)
     }
 
+    override suspend fun updateFavInfo(title: String, opponent: String): FavInfo {
+        return GomokuFavourites.saveFav(title, opponent)
+    }
+
+    override suspend fun dismissPlays() {
+        GomokuFavourites.resetPlays()
+    }
     override suspend fun fetchFavourites(): List<FavInfo> {
         return GomokuFavourites.favourites
     }
@@ -37,26 +43,53 @@ object GomokuFavourites {
     val cell1: Cell = Cell.invoke(11, 4, BOARD_DIM)
     val cell2: Cell = Cell.invoke(10, 6, BOARD_DIM)
     val map: Map<Cell,Turn> = mapOf(Pair(cell1,Turn.BLACK_PIECE))
-    val plays : List<BoardRun> = listOf(
+    val plays : List<Board> = listOf(
         BoardRun(emptyMap(),Turn.BLACK_PIECE, BOARD_DIM),
         BoardRun(map,Turn.BLACK_PIECE, BOARD_DIM),
         BoardRun(map + mapOf(Pair(cell2,Turn.WHITE_PIECE)),Turn.WHITE_PIECE, BOARD_DIM),
     )
 
     private val _favourites: MutableList<FavInfo> = mutableListOf(
-        FavInfo("Game1", "tbmaster", "05/02/2024", /*plays*/),
-        FavInfo("Game2","jp","05/02/2024", /*plays*/),
-        FavInfo("Game3","tiago","05/02/2024", /*plays*/),
+        FavInfo("Game1", "tbmaster", "05/02/2024", plays),
+        FavInfo("Game2","jp","05/02/2024", plays),
+        FavInfo("Game3","tiago","05/02/2024", plays),
     )
-    var favouritesPlays : List<Board> = emptyList()
+
+    val favourites : List<FavInfo>
+        get() = _favourites.toList()
+
+
+    private var favouritesPlays : List<Board> = emptyList()
     fun updatePlays(game: Game): List<Board>{
         val boardToAdd = BoardRun(game.board.positions,game.currentPlayer.second, BOARD_DIM)
         favouritesPlays = favouritesPlays + boardToAdd
         return favouritesPlays
     }
 
-    val favourites : List<FavInfo>
-        get() = _favourites.toList()
+    fun saveFav(title: String, opponent: String): FavInfo{
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+        val hour = c.get(Calendar.HOUR_OF_DAY)
+        val minute = c.get(Calendar.MINUTE)
+        val date = "$day-$month-$year $hour:$minute"
+        val plays = favouritesPlays
+
+        val newFavGame = FavInfo(title, opponent, date, plays)
+
+        _favourites.add(newFavGame)
+
+        resetPlays()
+
+        return newFavGame
+    }
+
+    fun resetPlays(){
+        favouritesPlays = emptyList()
+    }
+
+
 }
 
 

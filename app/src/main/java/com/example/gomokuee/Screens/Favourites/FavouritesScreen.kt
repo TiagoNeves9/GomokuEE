@@ -46,8 +46,8 @@ fun FavouritesScreen(
                     .fillMaxSize()
             ) {
 
-                favourites.getOrNull()?.forEach {
-                    FavouritesInfoView(favInfo = it, onFavSelected = onFavouriteSelected)
+                favourites.getOrNull()?.forEach { favInfo ->
+                    FavouritesInfoView(favInfo = favInfo, onFavSelected = { onFavouriteSelected(favInfo) } )
                 }
             }
         }

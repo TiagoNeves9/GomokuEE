@@ -47,10 +47,4 @@ fun FavouritesInfoView(
 @Preview(showBackground = true,  showSystemUi = true)
 @Composable
 fun FavPreview(){
-    GomokuEETheme {
-        FavouritesInfoView(
-            favInfo = FavInfo("Game1","Antunes","05-02-2024 11:45"),
-            onFavSelected = { }
-        )
-    }
 }

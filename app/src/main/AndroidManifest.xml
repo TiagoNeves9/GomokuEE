@@ -40,6 +40,9 @@
         <activity
             android:name=".Screens.Replay.ReplayActivity"
             android:exported="false"/>
+        <activity
+            android:name=".Screens.NewFavourite.NewFavouriteActivity"
+            android:exported="false"/>
     </application>
 
 </manifest>

@@ -31,52 +31,32 @@ import kotlinx.coroutines.launch
 class ReplayActivity : ComponentActivity() {
 
     companion object{
-        fun navigateTo(origin: Context, favInfo: FavInfo){
+        fun navigateTo(origin: Context, favInfo: FavExtra){
             origin.startActivity(createIntent(origin, favInfo))
         }
 
-        private fun createIntent(ctx: Context, favInfo: FavInfo): Intent {
+        private fun createIntent(ctx: Context, favInfo: FavExtra): Intent {
             val intent = Intent(ctx, ReplayActivity::class.java)
-            intent.putExtra(FAVOURITE_EXTRA, FavExtra(favInfo))
+            intent.putExtra(FAVOURITE_EXTRA, favInfo)
             return intent
         }
     }
 
-    private val favInfoExtra: FavInfo by lazy {
+    private val favInfo: FavInfo by lazy {
         checkNotNull(getFavInfoExtra(intent)).toFavInfo()
     }
 
-    private val dependencies by lazy {
-        application as GomokuDependenciesContainer
-    }
-
     private val viewModel by viewModels<ReplayScreenViewModel>{
-        ReplayScreenViewModel.factory(dependencies.gomokuService)
+        ReplayScreenViewModel.factory(favInfo.plays)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModel.fetchFavourites()
-            }
-        }
-
-        val cell1: Cell = Cell.invoke(11, 4, BOARD_DIM)
-        val cell2: Cell = Cell.invoke(10, 6, BOARD_DIM)
-        val map: Map<Cell,Turn> = mapOf(Pair(cell1,Turn.BLACK_PIECE))
-        val plays : List<BoardRun> = listOf(
-            BoardRun(emptyMap(),Turn.BLACK_PIECE, BOARD_DIM),
-            BoardRun(map,Turn.BLACK_PIECE, BOARD_DIM),
-            BoardRun(map + mapOf(Pair(cell2,Turn.WHITE_PIECE)),Turn.WHITE_PIECE, BOARD_DIM),
-        )
-
         setContent {
-            val currentFavourites by viewModel.favouritesList.collectAsState(initial = idle())
             GomokuEETheme {
                 ReplayScreen(
-                    plays = plays,
+                    favInfo = favInfo,
                     index = viewModel.index,
                     replayHandlers = ReplayHandlers( viewModel::next, viewModel::prev),
                     navigation = NavigationHandlers(onBackRequested = { finish() })

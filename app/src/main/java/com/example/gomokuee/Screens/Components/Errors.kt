@@ -20,21 +20,17 @@ import com.example.gomokuee.Service.ApiUnauthorizedException
 
 abstract class InputException : Exception()
 
-object EmptyUsername : InputException()
-object EmptyPassword : InputException()
-object EmptyConfirmPassword : InputException()
-object UnmatchedPasswords : InputException()
+object EmptyTitle : InputException()
+object EmptyOpponent : InputException()
 
-const val ErrorAlertTestTag = "ErrorAlertTestTag"
+
 
 @Composable
 fun ProcessError(dismissError: () -> Unit, cause: Throwable) {
     //Pair with title and message
     val errorDetails: Pair<Int, Int> = when(cause) {
-        is EmptyUsername -> Pair(R.string.error_username_title, R.string.username_is_blank_input_error)
-        is EmptyPassword -> Pair(R.string.error_password_title, R.string.password_is_blank_input_error)
-        is EmptyConfirmPassword -> Pair(R.string.error_confirm_password_title, R.string.repeat_password_is_blank_input_error)
-        is UnmatchedPasswords -> Pair(R.string.error_confirm_password_title, R.string.repeat_password_and_password_not_equal_input_error)
+        is EmptyTitle -> Pair(R.string.error_invalid_title, R.string.title_is_blank_input_error)
+        is EmptyOpponent -> Pair(R.string.error_invalid_opponent, R.string.opponent_is_blank_input_error)
         is ApiUnauthorizedException -> Pair(R.string.error_general_title, R.string.error_bad_login)
         else -> Pair(R.string.error_api_title, R.string.error_could_not_reach_api)
     }
@@ -87,6 +83,5 @@ private fun ErrorAlertImpl(
                 contentDescription = "Warning"
             )
         },
-        modifier = Modifier.testTag(ErrorAlertTestTag)
     )
 }
