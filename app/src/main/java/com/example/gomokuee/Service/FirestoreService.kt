@@ -28,10 +28,10 @@ class FirestoreService(
 
     override suspend fun updateFavInfo(title: String, opponent: String): FavInfo {
         var favouriteDoc: DocumentReference? = null
-        val plays = GomokuFavourites.plays
+        val plays = GomokuFavourites.favouritesPlays
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
-        val month = c.get(Calendar.MONTH)
+        val month = c.get(Calendar.MONTH) + 1
         val day = c.get(Calendar.DAY_OF_MONTH)
         val hour = c.get(Calendar.HOUR_OF_DAY)
         val minute = c.get(Calendar.MINUTE)
@@ -51,7 +51,7 @@ class FirestoreService(
                 favouriteDoc.delete().await()
             throw ex
         }
-
+        dismissPlays()
         return FirestoreExtensions.mapToFavourite(favouriteDoc.get().await())
     }
 

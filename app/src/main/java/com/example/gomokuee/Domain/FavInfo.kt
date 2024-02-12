@@ -1,5 +1,6 @@
 package com.example.gomokuee.Domain
 
+import android.util.Log
 import com.example.gomokuee.Domain.Board.Board
 import com.example.gomokuee.Domain.Board.deserializeToBoard
 import java.util.UUID
@@ -21,14 +22,14 @@ fun toFavInfoOrNull(title: String,opponent: String,date: String, plays: List<Boa
         null
 
 fun List<Board>.serialize() : String {
-    return this.joinToString(separator = "\n") { it.serialize() }
+    return this.joinToString(separator = "<>") { it.serialize()}
 }
 
 fun String.toListBoard() : List<Board>{
-    val boards = this.split("\n")
+    val boards = this.split("<>")
     val list = mutableListOf<Board>()
     var i = 0
-    while (i < this.length){
+    while (i < boards.size){
         val board = boards[i].deserializeToBoard()
         list.add(board)
         i++

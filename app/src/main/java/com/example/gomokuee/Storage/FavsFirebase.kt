@@ -4,6 +4,7 @@ import com.example.gomokuee.Domain.Board.Board
 import com.example.gomokuee.Domain.FavInfo
 import com.example.gomokuee.Domain.FavInfoRepository
 import com.example.gomokuee.Domain.FavouritesEvent
+import com.example.gomokuee.Domain.serialize
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
@@ -84,6 +85,6 @@ fun QuerySnapshot.toFavouritesList() = map { it.toFavouriteInfo() }
 fun FavInfo.toDocumentContent() = mapOf(
     TITLE_FIELD to title,
     OPPONENT_FIELD to opponent,
-    PLAYS_FIELD to plays,
+    PLAYS_FIELD to plays.serialize(),
     DATE_FIELD to date
 )

@@ -52,12 +52,15 @@ object GomokuFavourites {
         get() = _favourites.toList()
 
 
-    private var favouritesPlays : List<Board> = emptyList()
+    private var _favouritesPlays : List<Board> = emptyList()
     fun updatePlays(game: Game): List<Board>{
         val boardToAdd = BoardRun(game.board.positions,game.currentPlayer.second, BOARD_DIM)
-        favouritesPlays = favouritesPlays + boardToAdd
-        return favouritesPlays
+        _favouritesPlays = _favouritesPlays + boardToAdd
+        return _favouritesPlays
     }
+
+    val favouritesPlays : List<Board>
+        get() = _favouritesPlays
 
     fun saveFav(title: String, opponent: String): FavInfo{
         val c = Calendar.getInstance()
@@ -79,7 +82,7 @@ object GomokuFavourites {
     }
 
     fun resetPlays(){
-        favouritesPlays = emptyList()
+        _favouritesPlays = emptyList()
     }
 
 

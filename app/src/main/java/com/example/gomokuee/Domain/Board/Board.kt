@@ -1,5 +1,6 @@
 package com.example.gomokuee.Domain.Board
 
+import android.util.Log
 import com.example.gomokuee.Domain.Exceptions
 import com.example.gomokuee.Domain.Player
 import com.example.gomokuee.Domain.Turn
@@ -38,7 +39,7 @@ sealed class Board(val positions: Map<Cell, Turn>, val boardSize: Int) {
     fun positionsToString(): String {
         var str = ""
         positions.forEach {
-            val key = if (it.key.rowIndex <= 9) "0${it.key}" else "${it.key}"
+            val key = if (it.key.rowIndex < 9) "0${it.key}" else "${it.key}"
             str += if (it.value == Turn.BLACK_PIECE) "${key}B"
             else "${key}W"
         }
@@ -58,7 +59,7 @@ sealed class Board(val positions: Map<Cell, Turn>, val boardSize: Int) {
         val klassName = this.typeToString()
         val boardDim = boardSize.boardSizeString()
         val moves = positionsToString()
-        return "$klassName\n$moves\n$boardDim"
+        return "$klassName+$boardDim+$moves"
     }
 
 }
@@ -66,6 +67,8 @@ sealed class Board(val positions: Map<Cell, Turn>, val boardSize: Int) {
 
 
 fun String.stringToPositions(boardSize: Int): Map<Cell, Turn> {
+    Log.v("StringCheck", this)
+    Log.v("StringSize", this.length.toString())
     check(this.length % 4 == 0) { "Invalid string length." }
     val map = mutableMapOf<Cell, Turn>()
     var i = 0
@@ -128,10 +131,11 @@ class BoardRun(positions: Map<Cell, Turn>, val turn: Turn, boardSize: Int) : Boa
 
 }
 fun String.deserializeToBoard(): Board{
-    val words = this.split("\n")
-    val boardDim = words[1].toBoardDim()
-    val moves = words[2].stringToPositions(boardDim)
+    val words = this.split("+")
     val board = words[0]
+    val boardDim = words[1].toBoardDim()
+    val moves = if (words[2].isBlank()) emptyMap<Cell,Turn>() else words[2].stringToPositions(boardDim)
+    if (moves.isEmpty()) return createBoard(boardSize = boardDim)
     return when(board){
         BOARD_RUNNING -> BoardRun(moves,moves.toList().last().second,boardDim)
         BOARD_DRAW -> BoardDraw(moves,boardDim)
