@@ -15,12 +15,6 @@ fun validateFavInfo(title: String, opponent: String, date:String): Boolean {
     return title.isNotBlank() && opponent.isNotBlank() && date.isNotBlank()
 }
 
-fun toFavInfoOrNull(title: String,opponent: String,date: String, plays: List<Board>): FavInfo? =
-    if (validateFavInfo(title, opponent, date))
-        FavInfo(title, opponent, date, plays)
-    else
-        null
-
 fun List<Board>.serialize() : String {
     return this.joinToString(separator = "<>") { it.serialize()}
 }

@@ -1,42 +1,30 @@
 package com.example.gomokuee.Screens.Game
 
-import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
+
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.gomokuee.Domain.Board.BoardDraw
 import com.example.gomokuee.Domain.Board.BoardRun
 import com.example.gomokuee.Domain.Board.BoardWin
 import com.example.gomokuee.Domain.Board.Cell
 import com.example.gomokuee.Domain.Game
 import com.example.gomokuee.Domain.LoadState
 import com.example.gomokuee.Domain.Player
-import com.example.gomokuee.Domain.UserInfo
 import com.example.gomokuee.Domain.failure
 import com.example.gomokuee.Domain.getOrNull
 import com.example.gomokuee.Domain.idle
 import com.example.gomokuee.Domain.loaded
-import com.example.gomokuee.Domain.loading
 import com.example.gomokuee.Domain.success
 import com.example.gomokuee.Service.GomokuService
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.time.Instant
 
 class GameScreenViewModel(
     private val service : GomokuService,
@@ -47,8 +35,6 @@ class GameScreenViewModel(
             initializer { GameScreenViewModel(service,gameInfo) }
         }
     }
-
-    private val scope = CoroutineScope(Dispatchers.IO)
 
     private var _selectedCell: Cell? by mutableStateOf(null)
 
@@ -74,9 +60,6 @@ class GameScreenViewModel(
 
     val time: Long
         get() = _time
-
-    val startAt: Long
-        get() = _startedAt
 
     val running
         get() = _running
@@ -123,7 +106,6 @@ class GameScreenViewModel(
 
     fun play() {
         check(_selectedCell != null)
-        //_currentGameFlow.value = loading()
         viewModelScope.launch {
             _selectedCell?.let {cell ->
                 try {

@@ -8,18 +8,13 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.Lifecycle
-import com.example.gomokuee.Domain.Board.BoardDraw
-import com.example.gomokuee.Domain.Board.BoardWin
 import com.example.gomokuee.Domain.Game
-import com.example.gomokuee.Domain.Idle
 import com.example.gomokuee.Domain.idle
 import com.example.gomokuee.GomokuDependenciesContainer
 import com.example.gomokuee.Screens.Common.GAME_EXTRA
 import com.example.gomokuee.Screens.Common.GameExtra
 import com.example.gomokuee.Screens.Common.getGameExtra
 import com.example.gomokuee.Screens.Components.NavigationHandlers
-import com.example.gomokuee.Screens.Home.HomeActivity
 import com.example.gomokuee.Screens.NewFavourite.NewFavouriteActivity
 import com.example.gomokuee.ui.theme.GomokuEETheme
 
@@ -69,13 +64,6 @@ class GameActivity : ComponentActivity() {
                     ),
                 )
             }
-        }
-    }
-
-    private fun doNavigation(game: Game?) {
-        if (game != null && (game.board is BoardWin || game.board is BoardDraw)) {
-            HomeActivity.navigateTo(origin = this)
-            finish()
         }
     }
 }

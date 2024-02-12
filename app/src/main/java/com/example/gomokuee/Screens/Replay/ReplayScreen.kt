@@ -1,7 +1,6 @@
 package com.example.gomokuee.Screens.Replay
 
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row

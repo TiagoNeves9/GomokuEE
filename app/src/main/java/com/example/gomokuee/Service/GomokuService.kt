@@ -3,7 +3,6 @@ package com.example.gomokuee.Service
 import com.example.gomokuee.Domain.Board.Cell
 import com.example.gomokuee.Domain.FavInfo
 import com.example.gomokuee.Domain.Game
-import com.example.gomokuee.Service.utils.ProblemJson
 import kotlinx.coroutines.flow.Flow
 
 

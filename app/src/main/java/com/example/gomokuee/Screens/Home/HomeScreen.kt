@@ -23,7 +23,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.gomokuee.Domain.UserInfo
 import com.example.gomokuee.R
 import com.example.gomokuee.Screens.Components.CustomBar
 import com.example.gomokuee.Screens.Components.CustomContainerView
@@ -39,7 +38,6 @@ private data class MenuOption(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    userInfo: UserInfo? = null,
     error: Exception? = null,
     onPlayRequest: () -> Unit = { },
     onFavoritesRequest: () -> Unit = { },
@@ -101,5 +99,5 @@ fun MenuButton(onClick: () -> Unit = {}, content: @Composable () -> Unit) =
 @Preview(showBackground = true, showSystemUi = true)
 fun HomeScreenPreview() =
     GomokuEETheme {
-        HomeScreen(UserInfo("1","Tiago","abc123"))
+        HomeScreen()
     }

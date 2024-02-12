@@ -2,9 +2,6 @@ package com.example.gomokuee.Screens.Common
 
 import android.content.Intent
 import android.os.Parcelable
-import android.util.Log
-import com.example.gomokuee.Domain.Board.Board
-import com.example.gomokuee.Domain.Board.BoardRun
 import com.example.gomokuee.Domain.FavInfo
 import com.example.gomokuee.Domain.Turn
 import kotlinx.parcelize.Parcelize
@@ -16,7 +13,6 @@ data class FavExtra(val title: String, val opponent: String, val date : String, 
 }
 
 fun FavExtra.toFavInfo() : FavInfo {
-    Log.v("Favourite", this.toString())
     return FavInfo(title,opponent, date, plays.map {
         if (it.positions.isEmpty()) it.toBoard(Turn.BLACK_PIECE)
         else it.toBoard(it.positions.toList().last().second)

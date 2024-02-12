@@ -6,27 +6,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import com.example.gomokuee.Domain.Board.BOARD_DIM
-import com.example.gomokuee.Domain.Board.BoardRun
-import com.example.gomokuee.Domain.Board.Cell
-import com.example.gomokuee.Domain.Board.Row
 import com.example.gomokuee.Domain.FavInfo
-import com.example.gomokuee.Domain.Turn
-import com.example.gomokuee.Domain.getOrNull
-import com.example.gomokuee.Domain.idle
-import com.example.gomokuee.GomokuDependenciesContainer
 import com.example.gomokuee.Screens.Common.FAVOURITE_EXTRA
 import com.example.gomokuee.Screens.Common.FavExtra
 import com.example.gomokuee.Screens.Common.getFavInfoExtra
 import com.example.gomokuee.Screens.Common.toFavInfo
 import com.example.gomokuee.Screens.Components.NavigationHandlers
 import com.example.gomokuee.ui.theme.GomokuEETheme
-import kotlinx.coroutines.launch
 
 class ReplayActivity : ComponentActivity() {
 

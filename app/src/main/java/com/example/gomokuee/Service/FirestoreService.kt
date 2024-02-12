@@ -74,8 +74,3 @@ class FirestoreService(
     }
 
 }
-
-/**
- * The name of the collection for ongoing games
- */
-const val ONGOING = "ongoing"

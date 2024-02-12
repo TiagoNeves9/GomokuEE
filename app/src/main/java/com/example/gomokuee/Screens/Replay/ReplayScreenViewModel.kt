@@ -8,16 +8,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.gomokuee.Domain.Board.Board
-import com.example.gomokuee.Domain.FavInfo
-import com.example.gomokuee.Domain.LoadState
-import com.example.gomokuee.Domain.getOrNull
-import com.example.gomokuee.Domain.idle
-import com.example.gomokuee.Domain.loaded
-import com.example.gomokuee.Domain.loading
-import com.example.gomokuee.Service.GomokuService
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ReplayScreenViewModel(private val plays : List<Board>): ViewModel() {

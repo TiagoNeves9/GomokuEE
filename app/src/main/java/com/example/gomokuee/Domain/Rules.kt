@@ -58,10 +58,6 @@ enum class Opening {
     }
 }
 
-val openingsList = listOf("Freestyle", "Pro")
-
-val variantsList = listOf("Freestyle", "Swap after first")
-
 enum class Variant {
     FREESTYLE, SWAP_AFTER_FIRST;
 }
