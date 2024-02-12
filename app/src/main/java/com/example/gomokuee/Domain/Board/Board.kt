@@ -53,7 +53,17 @@ sealed class Board(val positions: Map<Cell, Turn>, val boardSize: Int) {
             else BOARD_WHITE_WON
         }
     }
+
+    fun serialize(): String {
+        val klassName = this.typeToString()
+        val boardDim = boardSize.boardSizeString()
+        val moves = positionsToString()
+        return "$klassName\n$moves\n$boardDim"
+    }
+
 }
+
+
 
 fun String.stringToPositions(boardSize: Int): Map<Cell, Turn> {
     check(this.length % 4 == 0) { "Invalid string length." }
@@ -110,7 +120,25 @@ class BoardRun(positions: Map<Cell, Turn>, val turn: Turn, boardSize: Int) : Boa
         }
         return false
     }
+
+
+
+
+
+
 }
+fun String.deserializeToBoard(): Board{
+    val words = this.split("\n")
+    val boardDim = words[1].toBoardDim()
+    val moves = words[2].stringToPositions(boardDim)
+    val board = words[0]
+    return when(board){
+        BOARD_RUNNING -> BoardRun(moves,moves.toList().last().second,boardDim)
+        BOARD_DRAW -> BoardDraw(moves,boardDim)
+        else -> throw IllegalStateException("There is no board type for $board")
+    }
+}
+
 
 class BoardWin(positions: Map<Cell, Turn>, val winner: Player, boardSize: Int) : Board(positions, boardSize)
 
@@ -119,3 +147,5 @@ class BoardDraw(positions: Map<Cell, Turn>, boardSize: Int) : Board(positions, b
 fun createBoard(firstTurn: Turn = Turn.BLACK_PIECE, boardSize: Int) = BoardRun(mapOf(), firstTurn, boardSize)
 
 fun Int.boardSizeString(): String = if (this == BOARD_DIM) "15x15" else "19x19"
+
+fun String.toBoardDim() : Int = if (this == "15x15") BOARD_DIM else BIG_BOARD_DIM

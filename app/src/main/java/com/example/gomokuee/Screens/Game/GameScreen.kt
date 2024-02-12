@@ -86,8 +86,6 @@ fun GameScreen(
     onPlayRequested: () -> Unit = { },
     onDismissError: () -> Unit = { },
     navigation: NavigationHandlers = NavigationHandlers(),
-    onStop: () -> Unit = { },
-
 ){
     Scaffold(
         topBar = { CustomBar(text = stringResource(id = R.string.activity_game_title), navigation = navigation) }

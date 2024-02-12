@@ -39,7 +39,6 @@ class FavouritesViewModel( private val service: GomokuService) : ViewModel() {
         viewModelScope.launch {
             val result = runCatching { service.fetchFavourites() }
             _favouritesFlow.value = loaded(result)
-            Log.v("FFFavs", service.fetchFavourites().toString())
         }
     }
 }

@@ -121,22 +121,6 @@ class GameScreenViewModel(
 
     }
 
-
-
-
-    fun fetchGame() {
-        _currentGameFlow.value = loading()
-        scope.launch {
-            try {
-                service.getGameById(gameInfo.gameId).collect{ game ->
-                    _currentGameFlow.value = loaded(Result.success(game))
-                }
-            }catch (cause: Throwable){
-                _currentGameFlow.value = failure(cause)
-            }
-        }
-    }
-
     fun play() {
         check(_selectedCell != null)
         //_currentGameFlow.value = loading()

@@ -4,9 +4,29 @@ import com.example.gomokuee.Domain.Board.BIG_BOARD_DIM
 import com.example.gomokuee.Domain.Board.BOARD_DIM
 import com.example.gomokuee.Domain.Board.BoardRun
 import com.example.gomokuee.Domain.Board.Cell
+import com.example.gomokuee.Domain.Board.boardSizeString
 import com.example.gomokuee.Domain.Board.distance
+import com.example.gomokuee.Domain.Board.toBoardDim
 
 data class Rules(val boardDim: Int, val opening: Opening, val variant: Variant)
+
+fun Rules.serialize() : String {
+    val boardDim = this.boardDim.boardSizeString()
+    val opening = this.opening.toOpeningString()
+    val variant = this.variant.toVariantString()
+
+    return "$boardDim\n$opening\n$variant"
+}
+
+fun String.toRules() : Rules {
+    val words = this.split("\n")
+    val boardDim = words[0].toBoardDim()
+    val opening = words[1].toOpening()
+    val variant = words[2].toVariant()
+
+    return Rules(boardDim,opening, variant)
+}
+
 
 enum class Opening {
     FREESTYLE, PRO;

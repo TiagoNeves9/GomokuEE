@@ -45,7 +45,7 @@ class FavouritesActivity : ComponentActivity() {
 
 
     private val viewModel by viewModels<FavouritesViewModel>{
-        FavouritesViewModel.factory(dependecies.gomokuService)
+        FavouritesViewModel.factory(dependecies.gomokuServiceFirebase)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

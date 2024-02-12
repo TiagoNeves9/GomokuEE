@@ -9,13 +9,6 @@ import java.util.Calendar
 
 private const val FAKE_USER_TOKEN_LENGTH = 10
 class FakeGomokuService : GomokuService {
-
-    override suspend fun getGameById(gameId: String): Flow<Game> = flow {
-        val game =  GomokuGames.games.firstOrNull {
-            it.gameId == gameId
-        } ?: throw GameNotFound()
-        emit(game)
-    }
     override suspend fun play(gameId: String, cell: Cell, boardSize: Int): Flow<Game> = flow {
         val game = GomokuGames.games.firstOrNull {
             it.gameId == gameId

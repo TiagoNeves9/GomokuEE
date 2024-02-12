@@ -4,9 +4,12 @@ import android.app.Application
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import com.example.gomokuee.Domain.FavInfoRepository
 import com.example.gomokuee.Domain.UserInfoRepository
 import com.example.gomokuee.Service.FakeGomokuService
+import com.example.gomokuee.Service.FirestoreService
 import com.example.gomokuee.Service.GomokuService
+import com.example.gomokuee.Storage.FavsFirebase
 import com.example.gomokuee.Storage.UserInfoDataStore
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
@@ -17,8 +20,9 @@ import com.google.firebase.ktx.Firebase
 
 interface GomokuDependenciesContainer {
     val gomokuService : GomokuService
-
+    val favourite : FavInfoRepository
     val userInfoRepository : UserInfoRepository
+    val gomokuServiceFirebase : GomokuService
 }
 
 class GomokuApp : Application(), GomokuDependenciesContainer{
@@ -33,8 +37,12 @@ class GomokuApp : Application(), GomokuDependenciesContainer{
         }
     }
 
-    override val gomokuService: GomokuService = FakeGomokuService()
+    override val gomokuServiceFirebase: GomokuService
+        get() = FirestoreService(emulatedFirestoreDb)
 
+    override val gomokuService: GomokuService = FakeGomokuService()
+    override val favourite: FavInfoRepository
+        get() = FavsFirebase(emulatedFirestoreDb)
     override val userInfoRepository: UserInfoRepository
         get() = UserInfoDataStore(dataStore)
 }

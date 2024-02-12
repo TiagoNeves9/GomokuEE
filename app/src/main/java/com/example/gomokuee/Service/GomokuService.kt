@@ -8,8 +8,6 @@ import kotlinx.coroutines.flow.Flow
 
 
 interface GomokuService {
-
-    suspend fun getGameById(gameId: String): Flow<Game>
     suspend fun play(gameId: String, cell: Cell, boardSize: Int): Flow<Game>
 
     suspend fun updateFavInfo(title: String, opponent: String): FavInfo

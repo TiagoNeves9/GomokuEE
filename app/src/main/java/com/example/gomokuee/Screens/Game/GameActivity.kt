@@ -49,11 +49,6 @@ class GameActivity : ComponentActivity() {
         }
     }
 
-
-    private fun timerStatus(): Boolean{
-        return lifecycle.currentState == Lifecycle.State.STARTED
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.startTimer()
@@ -72,7 +67,6 @@ class GameActivity : ComponentActivity() {
                     navigation = NavigationHandlers(
                         onBackRequested = { finish() }
                     ),
-                    onStop = viewModel::stopTimer
                 )
             }
         }
